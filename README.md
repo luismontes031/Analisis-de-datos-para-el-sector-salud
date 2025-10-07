@@ -64,6 +64,105 @@ Este índice permite organizar, buscar y referenciar los datos de manera eficien
 
 Finalmente, el archivo limpio fue importado en Power BI para crear visualizaciones profesionales.
 Con los datos ya transformados y validados, se generaron gráficos que muestran la distribución por género, edad y enfermedad, además del promedio de facturación por servicio, el comportamiento por hospital o doctor y la detección de anomalías en registros.
+l conjunto de datos fue importado a Power BI Desktop, donde se realizó el modelado y la construcción de medidas DAX para obtener indicadores clave en el análisis de salud.
+Estas medidas permiten realizar un análisis dinámico por paciente, enfermedad, género, seguro y facturación, facilitando la detección de patrones clínicos y financieros.
 
+A continuación, se describen las principales medidas creadas y su propósito dentro del modelo:
+
+🧮 Medidas Base
+
+Casos = COUNTROWS(data_salud)
+Cuenta el número total de registros en la tabla data_salud. Representa la cantidad de casos o atenciones médicas registradas.
+Esta medida es fundamental para calcular frecuencias, proporciones y totales generales.
+
+Edad Promedio = AVERAGE(data_salud[Edad])
+Calcula la edad promedio de los pacientes.
+Permite analizar la distribución etaria de los usuarios y detectar si ciertas enfermedades afectan grupos de edad específicos.
+
+FacturaciónUSD = SUM(data_salud[FACTURACION]) / 1000000
+Suma la facturación total y la convierte a millones de dólares.
+Facilita la interpretación de montos elevados en gráficos y KPIs financieros.
+
+🏥 Indicadores Clínicos y de Estancia
+
+Total Estancia = SUM(data_salud[Estancia_Dias])
+Suma la cantidad total de días de hospitalización de los pacientes.
+Es útil para medir la demanda de camas, uso de recursos y severidad promedio de los casos.
+
+Enfermedad Principal =
+Esta medida identifica la enfermedad con mayor facturación por paciente.
+Se basa en la función TOPN y CALCULATE para devolver la enfermedad más costosa o recurrente por persona.
+Ayuda a detectar los diagnósticos que generan mayor carga económica en el sistema de salud.
+
+Paciente_Estancia_Max =
+Devuelve el paciente con la mayor cantidad total de días de estancia.
+Incluye además la enfermedad asociada y el número de días.
+Sirve para identificar casos críticos o estancias prolongadas que impactan la eficiencia hospitalaria.
+
+💊 Indicadores por Género
+
+Mayor_Enfermedad_Femenino =
+Crea una tabla virtual que agrupa las enfermedades y calcula el número de casos en mujeres (Genero = "F").
+Devuelve la enfermedad más frecuente en población femenina junto con la cantidad de casos.
+Permite análisis de salud con enfoque de género.
+
+Mayor_Enfermedad_Masculino =
+Similar a la anterior, pero enfocada en el género masculino (Genero = "M").
+Identifica la principal causa de atención o enfermedad en hombres, facilitando comparaciones entre géneros.
+
+💰 Indicadores Financieros
+
+Seguro mayor factura =
+Determina cuál es el seguro o entidad que acumula la mayor facturación total.
+Utiliza SUMMARIZE y TOPN para comparar el monto facturado por aseguradora.
+Es esencial para priorizar relaciones con aseguradoras de alto volumen o riesgo.
+
+FacturaciónSeguroMayorGlobal =
+Calcula la facturación total del seguro identificado como el de mayor facturación global.
+Ayuda a cuantificar el peso financiero de esa entidad dentro del sistema.
+
+Paciente_Med_Facturacion_Max =
+Devuelve el paciente con mayor facturación junto con su medicación principal y el valor total.
+Proporciona una visión combinada entre consumo de medicamentos y costos.
+
+📈 Indicadores Comparativos y de Proporción
+
+Porcentaje_Enfermedad =
+=DIVIDE(COUNTROWS(data_salud), CALCULATE(COUNTROWS(data_salud), ALL(data_salud[ENFERMEDAD])))
+Mide el porcentaje de cada enfermedad respecto al total global.
+Permite construir gráficos de distribución de enfermedades por su frecuencia relativa.
+
+Porcentaje_Por_Resultado =
+Calcula el porcentaje de casos por resultado de examen (positivo, negativo, indeterminado) dentro de cada enfermedad.
+Facilita el análisis clínico de efectividad o incidencia según resultados de laboratorio.
+
+Ranking Paciente Global =
+=RANKX(ALL(data_salud[NOMBRE]), [FacturacionUSD], , DESC)
+Asigna un ranking a los pacientes de acuerdo con su facturación total.
+Se utiliza en dashboards para identificar los pacientes más costosos o de mayor impacto económico.
+
+Top 5 Pacientes Global =
+Filtra los pacientes que se encuentran dentro del top 5 en facturación global, permitiendo construir visualizaciones destacadas con los casos más representativos.
+
+🧠 Resumen Analítico
+
+Estas medidas fueron diseñadas para combinar perspectivas clínicas, demográficas y financieras dentro de un mismo modelo de Power BI.
+La integración de funciones como VAR, CALCULATE, TOPN, RANKX, SUMMARIZE y CONCATENATEX permitió desarrollar un entorno analítico robusto y flexible.
+
+En total, se implementaron 15 medidas DAX para este modelo, organizadas en categorías base, clínicas, financieras y comparativas.
+Este enfoque modular facilita la ampliación futura del modelo, permitiendo incorporar predicciones de costo, prevalencia por edad o segmentación por entidad aseguradora.
+
+💡 Conclusión:
+El modelado en Power BI no solo permitió visualizar indicadores, sino transformar los datos en un sistema de inteligencia clínica-financiera, donde es posible responder preguntas como:
+
+¿Qué enfermedad genera la mayor carga económica?
+
+¿Cuál aseguradora concentra los costos más altos?
+
+¿Qué pacientes requieren estancias más largas o medicación costosa?
+
+¿Cómo varían los resultados clínicos según género o edad?
+
+Este enfoque integral convierte el proyecto en un dashboard analítico avanzado en salud, listo para ser integrado a un portafolio profesional o entorno institucional.
 En conclusión, este proceso permitió transformar un conjunto de datos crudo y con múltiples inconsistencias en una base sólida, confiable y lista para análisis descriptivos y predictivos en el ámbito de la salud.
 Este flujo de trabajo combina la precisión de Excel para la limpieza detallada con el poder analítico y visual de Power BI, logrando un resultado profesional y reproducible dentro del ciclo de vida de un proyecto de ciencia de datos aplicada al sector salud.
