@@ -155,13 +155,14 @@ Este enfoque modular facilita la ampliación futura del modelo, permitiendo inco
 💡 Conclusión:
 El modelado en Power BI no solo permitió visualizar indicadores, sino transformar los datos en un sistema de inteligencia clínica-financiera, donde es posible responder preguntas como:
 
-¿Qué enfermedad genera la mayor carga económica?
-
-¿Cuál aseguradora concentra los costos más altos?
-
+¿Qué enfermedad y medicamento genera la mayor carga económica?
+el cancer genero la enfermedad mas facturada con el paciente michael smith con el medicamento penicilina
+¿Cuál aseguradora y hospital concentra las mayores facturas?
+la aseguradora medicare y el hospital powell llc con un valor de 2779.000000 millones de dolares
 ¿Qué pacientes requieren estancias más largas o medicación costosa?
-
+los pacientes con estancias mas largas son con dx de cancer y obesidad
 ¿Cómo varían los resultados clínicos según género o edad?
+hay mas casos de enfermedad general para el genero masculino que femenino,para el genero masculino se encontro que los mayores casos corresponden para enfermedades de asma y para el genero femenino artritis
 
 Este enfoque integral convierte el proyecto en un dashboard analítico avanzado en salud, listo para ser integrado a un portafolio profesional o entorno institucional.
 En conclusión, este proceso permitió transformar un conjunto de datos crudo y con múltiples inconsistencias en una base sólida, confiable y lista para análisis descriptivos y predictivos en el ámbito de la salud.
